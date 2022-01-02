@@ -1,0 +1,115 @@
+<section class="cart">
+    <div class="cart-content">
+        <div class="left-cart-content" style="width: 100%;">
+            <table id="myTable" border="1" width=100%  style="background-color: #f2f2f2; border-color: purple;">
+                <tbody id="myTableBody" border="2"  style="border-width: 1px;">
+
+                    <tr>
+                        <th> </th>
+                        <th>Order Id</th>
+                        <th>Payment Method</th>
+                        <th>Payment Transaction Id</th>
+                        <th>Product List</th>
+                        <th>User Id</th>
+                    </tr>
+                   
+                   
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- <div class="right-cart-content">
+
+
+            <h2>TOTAL</h2>
+            <label for="">Subtotal <span id="subtotal"> ₹699.00 </span></label>
+            <label for="">Order Total <span id="ordertotal"> ₹699.00 </span></label>
+            <div class="checkout">
+                <button id="checkout-btn"> <a href="#" onclick="checkedOut()">PROCEED TO CHECKOUT</a> </button>
+            </div>
+
+            <div class="right-small-block">
+
+                <label for="">APPLY DISCOUNT CODE</label>
+                <input type="text" value="discount" id="discount" placeholder="Enter discount code">
+                <button id="apply-discount-btn"><a href="#">APPLY DISCOUNT</a></button>
+            </div>
+
+
+
+        </div> -->
+
+    </div>
+</section>
+
+
+<script>
+    window.onload = function viewOrder(){
+        var newUrl = window.location.href;
+        var AdminCheck = newUrl.split('?')[1];
+        //console.log(AdminCheck);
+        //console.log("is the admin")
+
+        // //console.log(url+" is "+url.split('?')[1]);
+        // //console.log(window.location.href);
+        
+        var token = localStorage.getItem("Authorization");
+        var http =  new XMLHttpRequest();
+            var url = "https://damp-springs-67425.herokuapp.com/getAllOrders";
+            if(AdminCheck != undefined){
+                url += AdminCheck+"";
+            }
+            // /getAllOrdersAdmin
+            
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 404) {
+                    // //console.log(http.responseText);
+                    // var json = JSON.parse(this.responseText);
+                    //console.log(this.responseText);
+                    alert("Session Timed Out!");
+                    location.href = "home.html";
+                }else if(http.readyState == 4 && http.status == 200) {
+                    // //console.log(http.responseText);
+                    var json = JSON.parse(this.responseText);
+
+                    // //console.log(json);
+                    var orderList = json.doc;
+                    //console.log(orderList);
+                    for(let i = 0 ;i < orderList.length; i++){
+                        var order = orderList[i];
+
+
+                        let addRow = '<tr>'+
+                            '<th> </th>'+
+                            '<th>'+order.orderId+'</th>'+
+                            '<th>'+order.paymentMethod+'</th>'+
+                            '<th>'+order.paymentTransactionId+'</th>'+
+                            '<th>'+productList(order.productList)+'</th>'+
+                            '<th>'+order.userId+'</th>'
+                            '</tr>';
+
+                        $("#myTable tbody").append(addRow);
+                    }
+
+                    // location.href = "home.html";
+                }else if(http.readyState == 4 && http.status == 500){
+                    alert("Session Timed out!");
+                    location.href = "home.html";
+                }
+            }
+            // //console.log(http.responseText);
+            http.open('GET',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.setRequestHeader("Authorization",token);
+            http.send();
+    }
+    function productList(productList){
+        var str = "<ul>";
+        for(var i = 0;i < productList.length;i++){
+            str += "<li>productId: "+productList[i].productId+"  qty: "+productList[i].qty+"</li>";
+        }
+        str += "</ul>";
+        return str;
+    }
+</script>

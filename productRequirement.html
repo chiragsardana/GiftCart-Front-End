@@ -1,0 +1,350 @@
+<section class="product-info">
+    <div class="left-product-img">
+        <img src="" alt="" width="500px" height="400px" id="productImage"/>
+    </div>
+
+    <div class="right-product-info">
+        <h3 id="productName"></h3>
+        <div class="heading-tags" style="margin-top: 15px;">
+            <p>
+                <span id="productId"></span> | <span id="noOfReviews"></span> |
+                <span class="red" id="noOfStars"></span>|
+                <span> <i class="fa fa-pencil"></i> ADD REVIEW </span>
+            </p>
+        </div>
+
+        <p style="font-size: 17px; margin-top: 28px;">
+            MRP (incl gst)
+            <span class="red" style="font-size: 28px " id="mrp"></span>
+        </p>
+
+        <p style="margin-top: 28px; font-size: 20px;">✓ Free Shipping</p>
+        <p class="red" style="margin-top: 28px; font-size: 20px;" id="noOfDeliveryDays"></p>
+
+        <div class="right-product-info-btn">
+            <div class="auto-increment-btn" id="qtyButton">
+
+                <!-- <button onclick="increment()"> &plus; </button> -->
+                <input type="number" id="input-no" value="1" min="1" max="10">
+                <!-- <button onclick="decrement()"> &minus; </button> -->
+            </div>
+
+            <button class="product-addcart-btn" onclick="addToCart()" id="addToCart">ADD TO CART</button>
+            <button class="product-buynow-btn" onclick="buyNow()" id="buyNow"> BUY NOW </button>
+
+        </div>
+
+    </div>
+
+
+
+
+
+</section>
+
+<hr style="margin: 20px; padding: 3px;">
+<!-- <br> -->
+<section class="product-features">
+
+    <div class=" w3-bar-block w3-light-grey w3-card" style="width:11%; margin-left: 200px; ">
+        <!-- <h5 class="w3-bar-item">Menu</h5> -->
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'Key-features')">KEY FEATURES</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'Details')">DETAILS</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'Disclaimer')">DISCLAIMER</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'Brand-details')">BRAND DETAILS</button>
+      </div>
+      
+      <div style="margin-left:200px">
+        <!-- <div class="w3-padding">Vertical Tab Example (sidebar)</div> -->
+      
+        <div id="Key-features" class="w3-container city" style="display:none">
+            <!-- <h2 class="red"> KEY FEATURESS </h2> -->
+             <ul  class="ul-disk" id="keyFeatures">
+                 <!-- <li  >Calendar type: desk calendar</li>
+                 <li>Utility personalised calendar for use at home or at the office</li> -->
+             </ul>
+        </div>
+      
+        <div id="Details" class="w3-container city" style="display:none">
+            <!-- <h2 class="red"> DETAILS </h2> -->
+            <p>Make a statement in your bedroom without uttering a word. Made from best
+                 quality material.</p>
+            <p id="productCategory">
+
+            </p>
+            <p id="productSubCategory">
+
+            </p>
+        </div>
+      
+        <div id="Disclaimer" class="w3-container city" style="display:none">
+            <!-- <h2 class="red">DISCLAIMER </h2> -->
+            <p>All Pictures shown are for illustration purpose only. Actual product may vary.</p>
+            <p>Due to differences in monitors, colours of products may also appear different to those shown on the site.</p>
+            <p>Giftcart reserves the right to change product images and specifications at any time without notice.</p>
+        </div>
+        
+        <div id="Brand-details" class="w3-container city" style="display:none">
+          <!-- <h2 class="red" style="text-align: center;"> BRAND DETAILS </h2> -->
+          <p>Manufacturer / Packer / Importer:</p>
+          <p>Giftcart Ecommerce Private Ltd.</p>
+          <p>343-345, 3rd Floor, Block C-D, JMD Empire Golf Course Extension, Sector 62, Gurgaon, Haryana 122011</p>
+          <p>Contact no:+91 991064 4899 Mon-Fri (9am-6pm)</p>
+        </div>
+      
+      </div>
+
+
+</section>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+
+<script>
+
+    function increment() {
+        document.getElementById('input-no').stepUp();
+    }
+    function decrement() {
+        document.getElementById('input-no').stepDown();
+    }
+
+
+</script>
+
+
+<script>
+function openCity(evt, cityName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("city");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-red", ""); 
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " w3-red";
+}
+</script>
+
+<script>
+   window.onload = function(){
+       //console.log(window.location.href);
+       var url = window.location.href;
+       //console.log(url.split('?')[1]);
+        var productId = url.split('?')[1];
+        var http = new XMLHttpRequest();
+        var url = "https://damp-springs-67425.herokuapp.com/showProduct/"+productId;
+        http.onreadystatechange = function() {
+            if(http.readyState == 4 && http.status == 200) {
+                //console.log(http.responseText);
+                var json = JSON.parse(this.responseText);
+                var product = json.doc;
+                //console.log(product);
+                document.getElementById("productName").innerHTML = product.productName.toUpperCase();
+                document.getElementById("productId").innerHTML = product.productId;
+                document.getElementById("noOfReviews").innerHTML = product.noOfReviews+ " Reviews ";
+                document.getElementById("mrp").innerHTML = "₹"+product.mrp;
+                document.getElementById("noOfDeliveryDays").innerHTML = "Delivery in "+product.noOfDeliveryDays+" Working Days";
+                document.getElementById("productCategory").innerHTML = "Product Category : "+product.productCategory.toUpperCase();
+                document.getElementById("productSubCategory").innerHTML = "Product Sub Category : "+product.productSubCategory.toUpperCase();
+                var keyFeatures = product.keyFeatures;
+                //console.log(keyFeatures)
+                for(let i = 0;i < keyFeatures.length;i++){
+                    $("#keyFeatures").append("<li>"+keyFeatures[i]+"</li>");
+                }
+                document.getElementById("productImage").src = product.productImage[0];
+                //console.log(product.productImage[0]);
+                document.getElementById("noOfStars").innerHTML = toStars(product.noOfStars);
+                checkUserType();
+
+            }else if(http.readyState == 4 && http.status == 500){
+                //console.log("No Product");
+            }
+        }
+        http.open('get',url,true);
+        http.setRequestHeader('Content-Type','application/json');
+        http.send();
+   }
+   function toStars(noOfStar){
+    var starString = "";
+    for(var i = 0;i < noOfStar;i++){
+        starString += "&starf;";
+    }
+    for(var i = noOfStar;i < 5;i++){
+        starString += "&star;";
+    }
+    //console.log(starString);
+    return starString;
+    
+   }
+</script>
+<script>
+    function checkUserType(){
+        //console.log("Check User Type Method");
+        var token = localStorage.getItem("Authorization");
+        if(token != null){
+            var http =  new XMLHttpRequest();
+            var url = "https://damp-springs-67425.herokuapp.com/getUserDetails";
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 404) {
+                    // //console.log(http.responseText);
+                    var json = JSON.parse(this.responseText);
+                    //console.log(json);
+                    // location.href = "home.html";
+                }else if(http.readyState == 4 && http.status == 200) {
+                    // //console.log(http.responseText);
+                    var json = JSON.parse(this.responseText);
+
+                    //console.log(json.doc.name);
+                    //console.log(json.doc.emailid);
+                    // alert(json.doc.userType);
+                    if(json.doc.userType == 'Admin'){
+                        // alert("This is Admin")
+                        // document.getElementById("qtyButton").style.display = none;
+                        document.getElementById("addToCart").innerHTML = "Update";
+                        document.getElementById("buyNow").innerHTML = "Delete";
+                        document.getElementById("addToCart").setAttribute("onclick", "updateProduct()");
+                        document.getElementById("buyNow").setAttribute("onclick", "deleteProduct()");
+                        document.getElementById("qtyButton").style.display = "none";
+                    }
+                    // alert("User Details \nEmail Id: "+json.doc.emailid+"\nName: "+json.doc.name);
+                    // location.href = "home.html";
+                }else if(http.readyState == 4 && http.status == 500){
+                    // alert("Session Timed out");
+                }
+            }
+                // //console.log(http.responseText);
+            http.open('GET',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.setRequestHeader("Authorization",token);
+            http.send();
+        }
+    }
+    function updateProduct(){
+        // alert("Update PRoduct MEthod Called");
+        var productId = document.getElementById("productId").innerText;
+        location.href = "addProduct.html?UpdateProduct?"+productId;
+    }
+    function deleteProduct(){
+        var productId = document.getElementById("productId").innerText;
+        var token = localStorage.getItem("Authorization");
+        var http =  new XMLHttpRequest();
+            var url = "https://damp-springs-67425.herokuapp.com/deleteProduct/"+productId;
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 404) {
+                    var json = JSON.parse(this.responseText);
+                    //console.log(json);
+                    // alert("You are not Logged in ,Please Login First!"+qty);
+                }else if(http.readyState == 4 && http.status == 200) {
+                    var json = JSON.parse(this.responseText);
+                    // //console.log(json.doc.name);
+                    alert("Deleted Succesfully "+productId);
+                    location.href = "home.html";
+
+                }else if(http.readyState == 4 && http.status == 500){
+                    alert("Session Timedout! || No Product is Found!");
+                }
+            }
+            http.open('DELETE',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.setRequestHeader("Authorization",token);
+            http.send();
+        // //deleteProduct/+productId
+    }
+</script>
+<script>
+    function addToCart(){
+        var qty = document.getElementById("input-no").value;
+        var productId = document.getElementById("productId").innerText;
+
+
+        var token = localStorage.getItem("Authorization");
+
+
+
+        //console.log(token);
+
+        var details = {
+            "qty": qty
+        };
+        var data = JSON.stringify(details)
+        if(token != null){
+            var http =  new XMLHttpRequest();
+            var url = "https://damp-springs-67425.herokuapp.com/addProductToCart/"+productId;
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 404) {
+                    var json = JSON.parse(this.responseText);
+                    //console.log(json);
+                    alert("You are not Logged in ,Please Login First!"+qty);
+                }else if(http.readyState == 4 && http.status == 200) {
+                    var json = JSON.parse(this.responseText);
+                    // //console.log(json.doc.name);
+                    alert("Product Added to Cart Succesfully!");
+                }else if(http.readyState == 4 && http.status == 500){
+                    alert("Product Already Added!");
+                }
+            }
+            http.open('PUT',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.setRequestHeader("Authorization",token);
+            http.send(data);
+        }else{
+            alert("You are not Logged in ,Please Login First!");
+        }
+
+        //console.log(productId+" and "+qty);
+    }
+    function buyNow(){
+        var qty = document.getElementById("input-no").value;
+        var productId = document.getElementById("productId").innerText;
+
+
+        var token = localStorage.getItem("Authorization");
+
+        //console.log(token);
+
+        var details = {
+            "qty": qty
+        };
+        var data = JSON.stringify(details)
+        if(token != null){
+            var http =  new XMLHttpRequest();
+            var url = "https://damp-springs-67425.herokuapp.com/addProductToCart/"+productId;
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 404) {
+                    var json = JSON.parse(this.responseText);
+                    //console.log(json);
+                    alert("You are not Logged in ,Please Login First!");
+                }else if(http.readyState == 4 && http.status == 200) {
+                    var json = JSON.parse(this.responseText);
+                    // //console.log(json.doc.name);
+                    alert("Product Added to Cart Succesfully!");
+                    location.href = "Cart.html";
+                }else if(http.readyState == 4 && http.status == 500){
+                    alert("Product Already Added");
+                }
+            }
+            http.open('PUT',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.setRequestHeader("Authorization",token);
+            http.send(data);
+        }else{
+            alert("You are not Logged in ,Please Login First!");
+        }
+
+        //console.log(productId+" and "+qty);
+    }
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>

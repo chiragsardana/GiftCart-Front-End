@@ -1,0 +1,106 @@
+<section class="video-section">
+
+    <div class="content">
+        <video autoplay muted loop id="myVideo">
+            <source src="/video/gifts-video.mp4" type="video/mp4">
+
+        </video>
+
+      
+        <div class="overlay">
+            <h2>Presents Always Bring Simle</h2>
+        </div>
+    </div>
+</section>
+
+
+
+<span id="idToBeUsed">
+</span>
+
+<hr>
+
+<script>
+    window.onload = function(){
+        showProductByCategory("Birthday");
+        showProductByCategory("Anniversary");
+        showProductByCategory("Marriage");
+        showProductByCategory("Festival");
+        // showProductByCategory("Soft-Toys");
+   }
+    function showProductByCategory(productCategory){
+        var url = "https://damp-springs-67425.herokuapp.com/showProductsByCategory/"+productCategory;
+        var http = new XMLHttpRequest();
+        http.onreadystatechange = function() {
+            if(http.readyState == 4 && http.status == 200) {
+                // //console.log(http.responseText);
+                var json = JSON.parse(this.responseText);
+                var products = json.doc;
+                //console.log(products);
+
+
+                /*
+                
+                elementToBeAdded = '<div class="col-md-4 mb-3">'+
+                        '<div class="card card-effect">'+'<img class="img-fluid" alt="100%x280"'+
+                            'src="  "> '+'<div class="card-body">'+
+                                '<h4 class="card-title"></h4>'+
+                                '<p class="card-text"></p>'+
+                                '<p>MRP(incl gst) <span> ₹699.00 </span></p>'+
+                                '<p id="stars">  </p>'+
+                                '<button id="btn-add-Cart" > <a href="product.html?'+
+                                    product.productId
+                                    +'">View Product</a> </button>'+
+                                '</div></div></div>';
+
+                */
+
+
+
+                var elementToBeAdded = '<section class="pt-5 pb-5 sec-border">'
+                    +'<div class="container">'+'<div class="row">'+'<div class="col-10">'
+                        +'<h3 class="mb-3">'+productCategory+'</h3>'+'<hr>'+'</div>'
+                        +'<div class="col-2 text-right">'
+                            +'<a class="btn btn-primary mb-3 mr-1" href="#" role="button" data-slide="prev">'
+                                +'<i class="fa fa-arrow-left"></i>'+'</a>'
+                                +'<a class="btn btn-primary mb-3 " href="#" role="button" data-slide="next">'
+                                    +'<i class="fa fa-arrow-right"></i>'+'</a></div><div class="col-12 card-space" style="margin-top: 20px;">'
+                                        +'<div class="carousel-inner"><div class="carousel-item active">'
+                                            +'<div class="row">';
+                for(let i = 0;i < products.length && i < 3;i++){
+
+                    var product = products[i];
+
+                    //console.log(i);
+                    elementToBeAdded += '<div class="col-md-4 mb-3">'
+                        +'<div class="card card-effect">'
+                            +'<img class="img-fluid" alt="100%x280" src="'+product.productImage[0]+'">'
+                            +'<div class="card-body">'+'<h4 class="card-title">'+product.productName.toUpperCase()+'</h4>'
+                                +'<p class="card-text" style="color:black;">'+product.productCategory.toUpperCase()+'</p>'
+                                +'<p style="color:black;">MRP(incl gst) <span style="color:black;">'+product.mrp+'</span></p>'+'<p id="stars">'+toStars(product.noOfStars)+'</p>'
+                                +'<button id="btn-add-Cart"> <a href="product.html?'+product.productId+'">View Product</a> </button>'
+                                +'</div></div></div>';
+                }
+                elementToBeAdded += '</div></div></div></div></div></div></div>';
+                $(idToBeUsed).append(elementToBeAdded);
+
+            }else if(http.readyState == 4 && http.status == 500){
+                //console.log("No Product");
+            }
+        }
+        http.open('GET',url,true);
+        http.setRequestHeader('Content-Type','application/json');
+        http.send();
+   }
+   function toStars(noOfStar){
+    var starString = "";
+    for(var i = 0;i < noOfStar;i++){
+        starString += "&starf;";
+    }
+    for(var i = noOfStar;i < 5;i++){
+        starString += "&star;";
+    }
+    //console.log(starString);
+    return starString;
+   }
+</script>

@@ -1,0 +1,114 @@
+.product-info {
+    display: flex;
+    flex-direction: row;
+
+    margin: 20px;
+
+    padding: 40px 30px;
+    justify-content: center;
+    /* align-items: center; */
+    /* text-align: left; */
+
+    background-color: white;
+}
+
+
+
+
+.left-product-img {
+    width: 42%;
+    margin: 20px;
+    border-radius: 10px;
+}
+.left-product-img img{
+    border: 3px groove red;
+    border-radius: 20px;
+}
+
+
+.right-product-info {
+
+    width: 40%;
+    margin: 20px;
+
+}
+
+.right-product-info h3{
+    font-size: 47px;
+    margin: 9px;
+}
+
+.heading-tags p{
+    font-size: 18px;
+    margin: 9ppx;
+}
+
+.right-product-info p{
+    /* margin: 9px; */
+}
+
+.right-product-info-btn{
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+    margin-top: 28;
+}
+
+.auto-increment-btn{
+    margin: 5px;
+    font-size: 22px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+
+}
+
+.auto-increment-btn input{
+    font-size: 30px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.right-product-info button{
+    margin: 5px;
+    font-size: 22px;
+    padding: 8px;
+    background-color: red;
+    color: white;
+}
+
+.right-product-info-btn button:hover{
+    background-color: rgb(255, 40, 40);
+}
+
+
+.product-features{
+
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    /* padding: 40px 33px; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    text-align: left;
+    /* margin-top: 40px;
+    margin-bottom: 40px; */
+    background-color: #ffffff;
+    padding: 20px 15px;
+   
+}
+
+
+.ul-disk{
+    list-style: square;
+}
+
+.ul-disk li::marker{
+    color: red;
+}
+
+.marginTop{
+    margin-top: 2px;
+}

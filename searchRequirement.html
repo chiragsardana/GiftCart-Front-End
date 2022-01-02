@@ -1,0 +1,111 @@
+<section class="pt-5 pb-5 sec-border">
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-10">
+                <h3 class="mb-3" id="productCategory">Search Result </h3>
+                <hr>
+            </div>
+
+
+
+
+            <div class="col-2 text-right">
+                <a class="btn btn-primary mb-3 mr-1" href="#" role="button"
+                    data-slide="prev">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a class="btn btn-primary mb-3 " href="#" role="button" data-slide="next">
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+
+
+
+            <div class="col-12 card-space" style="margin-top: 20px;">
+                <!-- <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel"> -->
+
+                    <div class="carousel-inner">
+
+
+
+                        <div class="carousel-item active" id="products">                                
+                        </div>
+
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    window.onload = function(){
+       //console.log(window.location.href);
+       var url = window.location.href;
+        var http = new XMLHttpRequest();
+        //console.log();
+        var urlNew = "https://damp-springs-67425.herokuapp.com/search/"+url.split('?')[1];
+        //console.log(urlNew);
+        document.getElementById("productCategory").innerHTML = "Search Result : "+url.split('?')[1];
+        url = urlNew;
+        http.onreadystatechange = function() {
+            if(http.readyState == 4 && http.status == 200) {
+                // //console.log(http.responseText);
+                var json = JSON.parse(this.responseText);
+                var products = json.doc;
+                //console.log(products);
+                var rowCount = 0;
+                var startElement = '';
+                var endElement = '';
+                var elementToBeAdded = '';
+                for(let i = 0;i < products.length;i++){
+                    if(i % 3 == 0 ){
+                        startElement = '<div class="row" id="'+rowCount+'">';
+                        endElement = '</div>';
+                        $("#products").append(startElement);
+                        rowCount++;
+                        //console.log(products[i].productId+startElement+endElement);
+                        
+                    }
+                    var product = products[i];
+                    elementToBeAdded = '<div class="col-md-4 mb-3">'+
+                        '<div class="card card-effect">'+'<img class="img-fluid" alt="100%x280"'+
+                            'src=" '+product.productImage[0]+' "> '+'<div class="card-body">'+
+                                '<h4 class="card-title">'+product.productName.toUpperCase()+'</h4>'+
+                                '<p class="card-text">'+product.productCategory.toUpperCase()+'</p>'+
+                                '<p>MRP(incl gst) <span> ₹'+product.mrp+'699.00 </span></p>'+
+                                '<p id="stars"> '+toStars(product.noOfStars)+' </p>'+
+                                '<button id="btn-add-Cart" > <a href="product.html?'+
+                                    product.productId
+                                    +'">View Product</a> </button>'+
+                                '</div></div></div>';
+                    var idToBeUsed = "#"+(rowCount-1)+"";
+                    //console.log(idToBeUsed);
+                    $(idToBeUsed).append(elementToBeAdded);
+                }
+
+            }else if(http.readyState == 4 && http.status == 500){
+                //console.log("No Product");
+                alert("Product Not Found!");
+                window.location.href = "home.html"
+            }
+        }
+        http.open('get',url,true);
+        http.setRequestHeader('Content-Type','application/json');
+        http.send();
+   }
+   function toStars(noOfStar){
+    var starString = "";
+    for(var i = 0;i < noOfStar;i++){
+        starString += "&starf;";
+    }
+    for(var i = noOfStar;i < 5;i++){
+        starString += "&star;";
+    }
+    //console.log(starString);
+    return starString;
+    
+   }
+</script>

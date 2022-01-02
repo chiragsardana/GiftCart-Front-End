@@ -1,0 +1,188 @@
+<header id="header">
+
+    <nav id="nav-bar">
+
+        <div class="logo">
+            <div class="img">
+                <a href="home.html">
+                    <img src="/images/gifts.png" alt="logo">
+                </a>
+
+            </div>
+            <h4>HappyGifts</h4>
+        </div>
+        <div class="search">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchBySBK">
+                <button class="btn btn-outline-success" type="button" onclick="search()">Search</button>
+            </form>
+        </div>
+
+        <script>
+            function search(){
+                var input = document.getElementById("searchBySBK").value;
+                // alert(input);
+                window.location.href = "/search.html?"+input;
+            }
+        </script>
+
+        <div class="nav-links" style="padding-top: 24px;">
+
+            <ul id="links">
+                <li>
+
+                    <div class="dropdown" id="userDropdown" style="display: none;">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 250px;margin-left: -50px; background-color: red;">
+                            <a href="#" id="userName" style="color: white;font-size: medium;"> User</a>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="justify-items: center; width: 250px;">
+                          <a class="dropdown-item" href="#" style="text-align: center;" onclick="viewProfile()">View Profile</a>
+                          <a class="dropdown-item" href="order.html" style="text-align: center;" id="viewOrder">View Order</a>
+                          <a class="dropdown-item" href="addProduct.html" style="text-align: center; display: none;" id="addProductAdmin">Add Product</a>
+                          <a class="dropdown-item" href="order.html?Admin" style="text-align: center; display: none;" id="viewOrderAdmin">View Orders</a>
+                          <a class="dropdown-item" href="#" style="text-align: center;" onclick="logout()">Logout</a>
+                        </div>
+                    </div>
+                    
+                </li>
+
+                
+
+                <li><a href="#" data-toggle="modal" data-target="#myModal" id="login">Login</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#myModal2" id="signup">Signup</a></li>
+                <li id="cartAdmin"><a id="cart" href="Cart.html" style="display: none;"><i class="fa fa-shopping-cart" id="cart"></i> Cart</a></li>
+            </ul>
+        </div>
+    </nav>
+
+</header>
+
+<script>
+
+
+
+        window.addEventListener("load",function() {
+            document.getElementById("userDropdown").style.display = "none";
+        //console.log("Executing");
+        var token = localStorage.getItem("Authorization");
+        // /getUserDetails
+        if(token != null){
+            var http =  new XMLHttpRequest();
+            var url = "https://damp-springs-67425.herokuapp.com/getUserDetails";
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 404) {
+                    // //console.log(http.responseText);
+                    var json = JSON.parse(this.responseText);
+                    //console.log(json);
+                    document.getElementById("login").style.display = "show";
+                    document.getElementById("signup").style.display = "show";
+                    document.getElementById("userName").style.display = "none";
+                    document.getElementById("cart").style.display = "none";
+                    // location.href = "home.html";
+                }else if(http.readyState == 4 && http.status == 200) {
+                    // //console.log(http.responseText);
+                    var json = JSON.parse(this.responseText);
+                    //console.log("Details: ");
+                    //console.log(json);
+                    if(json.doc.userType == "Admin"){
+                        document.getElementById("addProductAdmin").style.display = "block";
+                        document.getElementById("viewOrderAdmin").style.display = "block";
+                        document.getElementById("viewOrder").style.display = "none";
+                        document.getElementById("cartAdmin").style.display = "none";
+                    }
+
+                    //console.log(json.doc.name);
+                    document.getElementById("userName").innerHTML = json.doc.name.toUpperCase();
+                    document.getElementById("login").style.display = "none";
+                    document.getElementById("signup").style.display = "none";
+                    document.getElementById("userDropdown").style.display = "block";
+                    document.getElementById("cart").style.display = "block";
+                    // location.href = "home.html";
+                }else if(http.readyState == 4 && http.status ==500){
+                    document.getElementById("login").style.display = "show";
+                    document.getElementById("signup").style.display = "show";
+                    document.getElementById("userName").style.display = "none";
+                    document.getElementById("cart").style.display = "none";
+                }
+            }
+            // //console.log(http.responseText);
+            http.open('GET',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.setRequestHeader("Authorization",token);
+            http.send();
+        }else{
+            document.getElementById("userName").style.display = "none";
+            document.getElementById("cart").style.display = "none";
+        }
+        
+    }
+);
+
+
+</script>
+
+<section id="categories">
+    <div class="cartegories-block">
+        <div class="cat-items" id="Birthday">
+            <h4><a href="products.html?Birthday"> Birthday</a></h4>
+        </div>
+        <div class="cat-items" id="Anniversary">
+            <h4><a href="products.html?Anniversary"> Anniversary</a></h4>
+            
+        </div>
+        <div class="cat-items" id="Marriage">
+            <h4><a href="products.html?Marriage"> Marriage</a></h4>
+            
+        </div>
+        <div class="cat-items" id="Festivals">
+            <h4><a href="products.html?Festival"> Festivals</a></h4>
+            
+        </div>
+        <div class="cat-items" id="All">
+            <h4><a href="products.html"> All</a></h4>
+            
+        </div>
+    </div>
+</section>
+
+<script>
+    function logout(){
+        localStorage.removeItem("Authorization");
+        alert("Logout Succesfully!");
+        // location.reload();
+        window.location.href = "home.html"
+        // document.getElementById("userDropdown").style.display = "none";
+    }
+    function viewProfile(){
+        var token = localStorage.getItem("Authorization");
+        var http =  new XMLHttpRequest();
+            var url = "https://damp-springs-67425.herokuapp.com/getUserDetails";
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 404) {
+                    // //console.log(http.responseText);
+                    var json = JSON.parse(this.responseText);
+                    //console.log(json);
+                    // location.href = "home.html";
+                }else if(http.readyState == 4 && http.status == 200) {
+                    // //console.log(http.responseText);
+                    var json = JSON.parse(this.responseText);
+
+                    //console.log(json.doc.name);
+                    //console.log(json.doc.emailid);
+                    alert("User Details \nEmail Id: "+json.doc.emailid+"\nName: "+json.doc.name);
+                    // location.href = "home.html";
+                }else if(http.readyState == 4 && http.status == 500){
+                    alert("Session Timed out!");
+                }
+            }
+            // //console.log(http.responseText);
+            http.open('GET',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.setRequestHeader("Authorization",token);
+            http.send();
+    }
+    
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>

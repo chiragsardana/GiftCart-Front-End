@@ -1,0 +1,386 @@
+<section class="product-info">
+    <div class="left-product-img">
+        <input type="text" style="text-align: center;border:red; width:400px;height: 500px; border-style:solid;border-radius: 12px;" placeholder="Enter Product Image URL" id="productImage">
+        <!-- <img src="/images/cards/card-image-1.jpg" alt="" width="500px" height="400px" id="productImage"/> -->
+    </div>
+
+    <div class="right-product-info">
+        <h3><input type="text" style="border:red; border-width:4px; border-style:solid;border-radius: 15px;" placeholder="Enter Product Name"  id="productName"></h3>
+        <div class="heading-tags" style="margin-top: 15px;">
+            <p>
+                <span><input type="text" style="border:red; border-width:4px; border-style:solid;border-radius: 10px;" placeholder="Enter Product Id" id="productId"></span> | <br><br> <span ><input type="text" style="border:red; border-width:4px; border-style:solid;border-radius: 12px;" placeholder="Enter No. of Reviews" id="noOfReviews"></span> |
+                <span class="red"><input type="text"  style="border:red; border-width:4px; border-style:solid;border-radius: 10px;" placeholder="Enter No of Stars" id="noOfStars"> </span>
+            </p>
+        </div>
+
+        <p style="font-size: 17px; margin-top: 28px;">
+            MRP (incl gst)
+            <span class="red" style="font-size: 28px " > <input type="text" style="border:red; border-width:4px; border-style:solid;border-radius: 12px;" placeholder="Enter Product MRP" id="mrp"></span>
+        </p>
+
+        <p style="margin-top: 28px; font-size: 20px;">✓ Free Shipping</p>
+        <p class="red" style="margin-top: 28px; font-size: 20px;" ><input type="text" style="width:300px ;border:red; border-width:4px; border-style:solid;border-radius: 15px;" placeholder="Enter No. of Delivery Days" id="noOfDeliveryDays"></p>
+
+        <div class="right-product-info-btn">
+            <div class="auto-increment-btn">
+
+                <!-- <button onclick="increment()"> &plus; </button> -->
+                <input type="number" id="input-no" value="1" min="1" max="10">
+                <!-- <button onclick="decrement()"> &minus; </button> -->
+            </div>
+
+            <button class="product-addcart-btn" onclick="addToProduct()" id="addProduct">ADD PRODUCT</button>
+            <!-- <button class="product-buynow-btn" onclick="buyNow()"> BUY NOW </button> -->
+
+        </div>
+
+    </div>
+
+
+
+
+
+</section>
+
+<hr style="margin: 20px; padding: 3px;">
+<!-- <br> -->
+<section class="product-features">
+
+    <div class=" w3-bar-block w3-light-grey w3-card" style="width:11%; margin-left: 200px; ">
+        <!-- <h5 class="w3-bar-item">Menu</h5> -->
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'Key-features')">KEY FEATURES</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'Details')">DETAILS</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'Disclaimer')">DISCLAIMER</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event, 'Brand-details')">BRAND DETAILS</button>
+      </div>
+      
+      <div style="margin-left:200px">
+        <!-- <div class="w3-padding">Vertical Tab Example (sidebar)</div> -->
+      
+        <div id="Key-features" class="w3-container city" style="display:none">
+            <!-- <h2 class="red"> KEY FEATURESS </h2> -->
+             <ul  class="ul-disk" >
+                 <li><input type="text" style="margin-top: 5px;margin-bottom: 5px;border:red; border-width:4px; border-style:solid;border-radius: 10px;" placeholder="Enter Key Features" id="keyFeature1"></li>
+                 <li><input type="text" style="margin-top: 5px;margin-bottom: 5px;border:red; border-width:4px; border-style:solid;border-radius: 10px;" placeholder="Enter Key Features" id="keyFeature2"></li>
+                 <li><input type="text" style="margin-top: 5px;margin-bottom: 5px;border:red; border-width:4px; border-style:solid;border-radius: 10px;" placeholder="Enter Key Features" id="keyFeature3"></li>
+                 <li><input type="text" style="margin-top: 5px;margin-bottom: 5px;border:red; border-width:4px; border-style:solid;border-radius: 10px;" placeholder="Enter Key Features" id="keyFeature4"></li>
+                </ul>
+        </div>
+      
+        <div id="Details" class="w3-container city" style="display:none">
+            <!-- <h2 class="red"> DETAILS </h2> -->
+            <p>Make a statement in your bedroom without uttering a word. Made from best
+                 quality material.</p>
+            <p>
+                <input type="text" style="width: 300px;border:red; border-width:4px; border-style:solid;border-radius: 15px;" placeholder="Enter Product Category" id="productCategory">
+            </p>
+            <p>
+                <input type="text" style="width: 300px;border:red; border-width:4px; border-style:solid;border-radius: 15px;" placeholder="Enter Product Sub Category"  id="productSubCategory">
+            </p>
+        </div>
+      
+        <div id="Disclaimer" class="w3-container city" style="display:none">
+            <!-- <h2 class="red">DISCLAIMER </h2> -->
+            <p>All Pictures shown are for illustration purpose only. Actual product may vary.</p>
+            <p>Due to differences in monitors, colours of products may also appear different to those shown on the site.</p>
+            <p>Giftcart reserves the right to change product images and specifications at any time without notice.</p>
+        </div>
+        
+        <div id="Brand-details" class="w3-container city" style="display:none">
+          <!-- <h2 class="red" style="text-align: center;"> BRAND DETAILS </h2> -->
+          <p>Manufacturer / Packer / Importer:</p>
+          <p>Giftcart Ecommerce Private Ltd.</p>
+          <p>343-345, 3rd Floor, Block C-D, JMD Empire Golf Course Extension, Sector 62, Gurgaon, Haryana 122011</p>
+          <p>Contact no:+91 991064 4899 Mon-Fri (9am-6pm)</p>
+        </div>
+      
+      </div>
+
+
+</section>
+
+
+<script>
+
+    function increment() {
+        document.getElementById('input-no').stepUp();
+    }
+    function decrement() {
+        document.getElementById('input-no').stepDown();
+    }
+
+
+</script>
+
+
+<script>
+    function openCity(evt, cityName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("city");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" w3-red", ""); 
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " w3-red";
+    }
+</script>
+
+<script>
+    function addToProduct(){
+        //console.log("Add To Product Function Called");
+        var noOfStars = document.getElementById("noOfStars").value;
+        var qty = document.getElementById("input-no").value;
+        var productName = document.getElementById("productName").value;
+        var productImage = document.getElementById("productImage").value;
+        var productId = document.getElementById("productId").value;
+        var noOfReviews = document.getElementById("noOfReviews").value;
+        var mrp = document.getElementById("mrp").value;
+        var noOfDeliveryDays = document.getElementById("noOfDeliveryDays").value;
+        var productCategory = document.getElementById("productCategory").value;
+        var productSubCategory = document.getElementById("productSubCategory").value;
+        // //console.log(productSubCategory+" product Sub Category");
+        // //console.log(noOfStars+"no of stars");
+        // //console.log(qty+"qty");
+        // //console.log(productName+"productName");
+        // //console.log(productImage+"productImage");
+        // //console.log(productId+"product Id");
+        // //console.log(noOfReviews+"no of reviews");
+        // //console.log(mrp+"mrp");
+        // //console.log(noOfDeliveryDays+"no of delivery");
+        // //console.log(productCategory+"product Category");
+        // var input = document.getElementById("keyFeatures");
+        // //console.log(input.li.value);
+        var keyFeature1 = document.getElementById("keyFeature1").value;
+        var keyFeature2 = document.getElementById("keyFeature2").value;
+        var keyFeature3 = document.getElementById("keyFeature3").value;
+        var keyFeature4 = document.getElementById("keyFeature4").value;
+        // //console.log(keyFeature1);
+        // //console.log(keyFeature2);
+        // //console.log(keyFeature3);
+        // //console.log(keyFeature4);
+        var keyFeature = [keyFeature1, keyFeature2, keyFeature3, keyFeature4];
+        // //console.log("Key Featiures Arrays"+keyFeature.length);
+        var productImages = [productImage];
+        // //console.log("Product Image Array: "+productImages);
+
+
+
+
+
+
+
+
+
+
+        var token =  localStorage.getItem("Authorization");
+        var details = {
+            "productId": productId,
+            "productName": productName,
+            "productImage": productImages,
+            "noOfReviews": noOfReviews,
+            "noOfStars": noOfStars,
+            "mrp": mrp,
+            "noOfDeliveryDays": noOfDeliveryDays,
+            "qty": qty,
+            "keyFeatures": keyFeature,
+            "productCategory": productCategory,
+            "productSubCategory": productSubCategory
+        };
+        var data = JSON.stringify(details);
+        //console.log(data);
+        var http =  new XMLHttpRequest();
+        var url = "https://damp-springs-67425.herokuapp.com/registerProduct";
+        //console.log(url);
+        http.onreadystatechange = function() {
+
+            if(http.readyState == 4 && http.status == 404) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("404");
+            }else if(http.readyState == 4 && http.status == 200) {
+                // var json = JSON.parse(this.responseText);
+                //console.log(this.responseText);
+                //console.log("Ready");
+                alert("Product Added Succesfully!");
+                window.location.reload();
+            }else if(http.readyState == 4 && http.status == 500){
+                var sum = 0;
+                //console.log("Error");
+                // var json = JSON.parse(this.responseText);
+                //console.log(this.responseText);
+                //console.log("Order Failed to Added");
+                alert("Session Timedout or You are not an Admin!");
+                // //console.log("The Product List is "+productList);
+            }
+        }
+        http.open('POST',url,true);
+        http.setRequestHeader('Content-Type','application/json');
+        http.setRequestHeader("Authorization",token);
+        http.send(data);
+
+    }
+    window.onload = function(){
+        //console.log(window.location.href);
+        var url = window.location.href;
+        //console.log(url.split('?')[1]);
+        //console.log(url.split('?')[2]);
+        var productId = url.split('?')[2];
+        if(url.split('?')[1] == "UpdateProduct"){
+            var http = new XMLHttpRequest();
+            var url = "https://damp-springs-67425.herokuapp.com/showProduct/"+productId;
+            http.onreadystatechange = function() {
+                if(http.readyState == 4 && http.status == 200) {
+                    //console.log(http.responseText);
+                    var json = JSON.parse(this.responseText);
+                    var product = json.doc;
+                    //console.log(product);
+                    document.getElementById("addProduct").innerHTML = "Update Product"; 
+                    document.getElementById("addProduct").setAttribute("onclick", "updateProduct()");
+                    document.getElementById("productId").readOnly = true;
+
+                    document.getElementById("noOfStars").value = product.noOfStars;
+                    document.getElementById("input-no").value = product.qty;
+                    document.getElementById("productName").value = product.productName;
+                    document.getElementById("productImage").value = product.productImage[0];
+                    document.getElementById("productId").value = product.productId;
+                    document.getElementById("noOfReviews").value = product.noOfReviews;
+                    document.getElementById("mrp").value = product.mrp;
+                    document.getElementById("noOfDeliveryDays").value = product.noOfDeliveryDays; 
+                    document.getElementById("productCategory").value = product.productCategory;
+                    document.getElementById("productSubCategory").value = product.productSubCategory
+                    document.getElementById("keyFeature1").value = product.keyFeatures[0];
+                    document.getElementById("keyFeature2").value = product.keyFeatures[1];
+                    document.getElementById("keyFeature3").value = product.keyFeatures[2];
+                    document.getElementById("keyFeature4").value = product.keyFeatures[3];
+
+
+
+
+
+                    // document.getElementById("productName").innerHTML = product.productName;
+                    // document.getElementById("productId").innerHTML = product.productId;
+                    // document.getElementById("noOfReviews").innerHTML = product.noOfReviews+ " Reviews ";
+                    // document.getElementById("mrp").innerHTML = "₹"+product.mrp;
+                    // document.getElementById("noOfDeliveryDays").innerHTML = "Delivered in "+product.noOfDeliveryDays+" Working Days";
+                    // document.getElementById("productCategory").innerHTML = "Product Category : "+product.productCategory;
+                    // document.getElementById("productSubCategory").innerHTML = "Product Sub Category : "+product.productSubCategory;
+                    // var keyFeatures = product.keyFeatures;
+                    // //console.log(keyFeatures)
+                    // for(let i = 0;i < keyFeatures.length;i++){
+                    //     $("#keyFeatures").append("<li>"+keyFeatures[i]+"</li>");
+                    // }
+                    // document.getElementById("productImage").src = product.productImage[0];
+                    // //console.log(product.productImage[0]);
+                    // document.getElementById("noOfStars").innerHTML = toStars(product.noOfStars);
+
+                }else if(http.readyState == 4 && http.status == 500){
+                    //console.log("No Product");
+                }
+            }
+            http.open('get',url,true);
+            http.setRequestHeader('Content-Type','application/json');
+            http.send();
+        }else{
+            //console.log("Add Product Works Only");
+        }
+        // alert(url);
+    }
+    function updateProduct(){
+        // alert("Update Product Method Called");
+        //console.log("Add To Product Function Called");
+        var noOfStars = document.getElementById("noOfStars").value;
+        var qty = document.getElementById("input-no").value;
+        var productName = document.getElementById("productName").value;
+        var productImage = document.getElementById("productImage").value;
+        var productId = document.getElementById("productId").value;
+        var noOfReviews = document.getElementById("noOfReviews").value;
+        var mrp = document.getElementById("mrp").value;
+        var noOfDeliveryDays = document.getElementById("noOfDeliveryDays").value;
+        var productCategory = document.getElementById("productCategory").value;
+        var productSubCategory = document.getElementById("productSubCategory").value;
+        // //console.log(productSubCategory+" product Sub Category");
+        // //console.log(noOfStars+"no of stars");
+        // //console.log(qty+"qty");
+        // //console.log(productName+"productName");
+        // //console.log(productImage+"productImage");
+        // //console.log(productId+"product Id");
+        // //console.log(noOfReviews+"no of reviews");
+        // //console.log(mrp+"mrp");
+        // //console.log(noOfDeliveryDays+"no of delivery");
+        // //console.log(productCategory+"product Category");
+        // var input = document.getElementById("keyFeatures");
+        // //console.log(input.li.value);
+        var keyFeature1 = document.getElementById("keyFeature1").value;
+        var keyFeature2 = document.getElementById("keyFeature2").value;
+        var keyFeature3 = document.getElementById("keyFeature3").value;
+        var keyFeature4 = document.getElementById("keyFeature4").value;
+        // //console.log(keyFeature1);
+        // //console.log(keyFeature2);
+        // //console.log(keyFeature3);
+        // //console.log(keyFeature4);
+        var keyFeature = [keyFeature1, keyFeature2, keyFeature3, keyFeature4];
+        // //console.log("Key Featiures Arrays"+keyFeature.length);
+        var productImages = [productImage];
+        // //console.log("Product Image Array: "+productImages);
+
+
+
+
+
+
+
+
+
+
+        var token =  localStorage.getItem("Authorization");
+        var details = {
+            "productName": productName,
+            "productImage": productImages,
+            "noOfReviews": noOfReviews,
+            "noOfStars": noOfStars,
+            "mrp": mrp,
+            "noOfDeliveryDays": noOfDeliveryDays,
+            "qty": qty,
+            "keyFeatures": keyFeature,
+            "productCategory": productCategory,
+            "productSubCategory": productSubCategory
+        };
+        var data = JSON.stringify(details);
+        //console.log(data);
+        var http =  new XMLHttpRequest();
+        var url = "https://damp-springs-67425.herokuapp.com/updateProduct/"+productId;
+        //console.log(url);
+        http.onreadystatechange = function() {
+
+            if(http.readyState == 4 && http.status == 404) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("404");
+            }else if(http.readyState == 4 && http.status == 200) {
+                // var json = JSON.parse(this.responseText);
+                //console.log(this.responseText);
+                //console.log("Ready");
+                alert("Product Updated Succesfully!");
+                window.location.href = "home.html"
+            }else if(http.readyState == 4 && http.status == 500){
+                var sum = 0;
+                //console.log("Error");
+                // var json = JSON.parse(this.responseText);
+                //console.log(this.responseText);
+                //console.log("Product Failed to Updated");
+                alert("Session Timedout or You r not an Admin!");
+                // //console.log("The Product List is "+productList);
+            }
+        }
+        http.open('PUT',url,true);
+        http.setRequestHeader('Content-Type','application/json');
+        http.setRequestHeader("Authorization",token);
+        http.send(data);
+    }
+</script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>

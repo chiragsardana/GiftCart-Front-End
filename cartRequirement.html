@@ -1,0 +1,380 @@
+<section class="cart">
+    <div class="cart-content">
+        <div class="left-cart-content">
+            <table id="myTable" border="1" width=100%  style="background-color: #f2f2f2; border-color: purple;">
+                <tbody id="myTableBody" border="2"  style="border-width: 1px;">
+
+                    <tr>
+                        <th> </th>
+                        <th>ITEM</th>
+                        <th>PRICE</th>
+                        <th>QTY</th>
+                        <th>SUBTOTAL</th>
+                    </tr>
+                   
+                   
+                </tbody>
+
+            </table>
+        </div>
+
+        <div class="right-cart-content">
+
+
+            <h2>TOTAL</h2>
+            <label for="">Subtotal <span id="subtotal"></span></label>
+            <label for="">Order Total <span id="ordertotal"></span></label>
+            <div class="checkout">
+                <button id="checkout-btn"> <a href="#" onclick="checkedOut()">PROCEED TO CHECKOUT</a> </button>
+            </div>
+
+            <div class="right-small-block">
+
+                <label for="">APPLY DISCOUNT CODE</label>
+                <input type="text" value="discount" id="discount" placeholder="Enter discount code">
+                <button id="apply-discount-btn"><a href="#">APPLY DISCOUNT</a></button>
+            </div>
+
+
+
+        </div>
+
+    </div>
+</section>
+
+<script>
+    window.onload = function(){
+        var token = localStorage.getItem("Authorization");
+        //console.log(token);
+        if(token == null){
+            alert("You r not Logged in");
+            location.href = "home.html";
+        }else{
+            
+            var url = window.location.href;
+            //console.log("The URL is : "+url);
+            //console.log(url.split('?')[1]);
+            var productCommand = url.split('?')[1];
+            var productId = url.split('?')[2];
+            //console.log(productCommand+" and "+productId);
+
+            if(productCommand == "DeleteCartProduct"){
+                deleteCartProduct(productId);
+            }else if(productCommand == "UpdateCartProduct"){
+                var qty = prompt("Enter the Updated Quantity");
+                updateCartProduct(productId, qty);
+                // locationhref = ""
+            }else{
+                var http =  new XMLHttpRequest();
+                var url = "https://damp-springs-67425.herokuapp.com/getCart";
+                http.onreadystatechange = function() {
+
+                    if(http.readyState == 4 && http.status == 404) {
+                        var json = JSON.parse(this.responseText);
+                        //console.log(json);
+                        //console.log("404");
+                        alert("Session Timed Out");
+                        location.href = "home.html";
+                    }else if(http.readyState == 4 && http.status == 200) {
+                        var json = JSON.parse(this.responseText);
+                        //console.log(json);
+                        //console.log("Ready");
+                    }else if(http.readyState == 4 && http.status == 500){
+                        var sum = 0;
+                        //console.log("Error");
+                        // alert("Cart is Empty");
+                        // location.href = "home.html";
+                        var json = JSON.parse(this.responseText);
+                        //console.log(json.message);
+                        //console.log("is");
+                        if(json.message == "No Product in Cart"){
+                            alert("Cart is Empty!");
+                            location.href = "home.html";
+                        }
+                        
+                        if(json.doc != undefined){
+                            var productList =  json.doc.productList;
+                            //console.log("The Product List is");
+                            // //console.log(productList)
+                            if(productList.length == 0){
+                                alert("Cart is Empty");
+                                location.href = "home.html";
+                            }
+                            for(let i = 0 ;i < productList.length; i++){
+                                //console.log(productList[i]);
+                                sum += getProductDetails(productList[i].productId, productList[i].qty);
+                            }
+                            //console.log(sum+" is the sum");
+                        }
+                        document.getElementById("subtotal").innerHTML = "₹ "+sum;
+                        document.getElementById("ordertotal").innerHTML = "₹ "+sum;
+                        var table = document.getElementById("myTable");
+                    }
+                }
+                http.open('GET',url,false);
+                http.setRequestHeader('Content-Type','application/json');
+                http.setRequestHeader("Authorization",token);
+                http.send();
+            }
+
+            // deleteCartProduct();
+            // updateCartProduct();
+
+            
+        }   
+    }
+    function deleteCartProduct(productId){
+        var token = localStorage.getItem("Authorization");
+        var url = "https://damp-springs-67425.herokuapp.com/deleteProductFromCart/"+productId;
+        //console.log(url);
+        var http =  new XMLHttpRequest();
+        http.onreadystatechange = function() {
+
+            if(http.readyState == 4 && http.status == 404) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("404");
+                alert("Unable to Delete Product in Cart!");
+                location.href = "Cart.html";
+            }else if(http.readyState == 4 && http.status == 200) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("Ready");
+                alert("Product "+productId+" Deleted!");
+                location.href = "Cart.html";
+            }else if(http.readyState == 4 && http.status == 500){
+                //console.log("Error");
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+            }
+        }
+        http.open('DELETE',url,true);
+        http.setRequestHeader('Content-Type','application/json');
+        http.setRequestHeader("Authorization",token);
+        http.send();
+    }
+    function updateCartProduct(productId, qty){
+        var token = localStorage.getItem("Authorization");
+        var url = "https://damp-springs-67425.herokuapp.com/updateQtyInProduct/"+productId;
+        //console.log(url);
+        var details = {
+            "qty": qty
+        };
+        var data = JSON.stringify(details);
+        var http =  new XMLHttpRequest();
+        http.onreadystatechange = function() {
+
+            if(http.readyState == 4 && http.status == 404) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("404");
+                alert("Unable to Update Product in Cart!");
+                location.href = "Cart.html";
+            }else if(http.readyState == 4 && http.status == 200) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("Ready");
+                alert("Product "+productId+" Updated Successfully!");
+                location.href = "Cart.html";
+            }else if(http.readyState == 4 && http.status == 500){
+                //console.log("Error");
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+            }
+        }
+        http.open('PUT',url,true);
+        http.setRequestHeader('Content-Type','application/json');
+        http.setRequestHeader("Authorization",token);
+        http.send(data);
+    }
+
+    function getProductDetails(productId,qty){
+        var url = "https://damp-springs-67425.herokuapp.com/showProduct/"+productId;
+        //console.log(url);
+        var sum = 0;
+        var http =  new XMLHttpRequest();
+
+        http.onreadystatechange = function() {
+            if(http.readyState == 4 && http.status == 500) {
+                // //console.log(http.responseText);
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("No Product Found");
+                // location.href = "home.html";
+            }else if(http.readyState == 4 && http.status == 200) {
+                // //console.log(http.responseText);
+                var json = JSON.parse(this.responseText);
+                // //console.log(json);
+                var product = json.doc;
+                //console.log(product);
+                let addRow = '<tr><td><div class="add-del"><a href="Cart.html?DeleteCartProduct?'+product.productId+'" class="red"><i class="fa fa-regular fa-trash"></i></a>'+
+                    '<a href="Cart.html?UpdateCartProduct?'+product.productId+'" class="red"><i class="fa fa-pencil-square"></i></a></div></td><td><div class="item-info">'+
+                        '<div class="item-info-img"><img src="/images/cards/card-image-1.jpg" alt="" width="100px"></div>'+
+                        '<h2>'+product.productName.toUpperCase()+'</h2></div></td><td class="red"><h3>₹'+product.mrp+'</h3></td><td><h3>'+qty+'</h3></td>'+
+                        '<td class="red"><h3>₹'+product.mrp*qty+'</h3></td></tr>';
+                $("#myTable tbody").append(addRow);
+                sum = product.mrp*qty;
+                
+            }
+        }
+
+        http.open('GET',url,false);
+        http.setRequestHeader('Content-Type','application/json');
+        http.send();
+        return sum;
+    }
+    function checkedOut(){
+        
+        var address = prompt("Enter Your Address", "Address").toLowerCase();
+        var paymentMode = prompt("Enter Your Payment Mode", "COD/Online").toLowerCase();
+
+        var flag = false;
+        //console.log(address+"is and ");
+        if(address != "address"){
+            if(paymentMode == "cod/online"){
+                flag = true;
+            }else if(paymentMode == " "){
+                flag = true;
+            }else if(paymentMode == "cod" || paymentMode == "online"){
+                flag = false;
+            }else{
+                flag = true;
+            }
+            
+        }else{
+            flag = true;
+        }
+        if(flag == false){
+            //console.log(address+" and "+paymentMode+" in checkOut");
+            var productList = getProductList();
+            if(productList == null){
+                alert("Cart is Empty!");
+                return;
+            }
+            let paymentTransactionId = Math.round((new Date()).getTime() / 1000)+""+ Math.random()*10000000000000000;
+            //console.log(paymentTransactionId);
+            //console.log(productList);
+            addToOrder(productList, paymentMode, paymentTransactionId, address);
+        }else{
+            alert("Some Details are wrong!");
+        }
+        
+    }
+
+    function addToOrder(productList, paymentMode, paymentTransactionId, address){
+        var token = localStorage.getItem("Authorization");
+        //console.log(token);
+        var details = {
+            "productList": productList,
+            "paymentMethod": paymentMode,
+            "paymentTransactionId": paymentTransactionId,
+            "address": address
+        }
+        var data = JSON.stringify(details);
+        //console.log(data);
+        var http =  new XMLHttpRequest();
+        var url = "https://damp-springs-67425.herokuapp.com/addOrder";
+        //console.log(url);
+        http.onreadystatechange = function() {
+
+            if(http.readyState == 4 && http.status == 404) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("404");
+            }else if(http.readyState == 4 && http.status == 200) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("Ready");
+                var orderId = json.doc.orderId;
+                alert("Ordered Succedssfully"+"\n Order Id: "+orderId+" !");
+                clearCart();
+            }else if(http.readyState == 4 && http.status == 500){
+                var sum = 0;
+                //console.log("Error");
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("Order Failed to Added");
+                alert("Ordered Failed Due to Some Error!");
+                // //console.log("The Product List is "+productList);
+            }
+        }
+        http.open('POST',url,false);
+        http.setRequestHeader('Content-Type','application/json');
+        http.setRequestHeader("Authorization",token);
+        http.send(data);
+    }
+
+
+    function clearCart(){
+        var token = localStorage.getItem("Authorization");
+        //console.log(token);
+        var http =  new XMLHttpRequest();
+        var url = "https://damp-springs-67425.herokuapp.com/deleteAllProductFromCart";
+        //console.log(url);
+        http.onreadystatechange = function() {
+
+            if(http.readyState == 4 && http.status == 404) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("404");
+            }else if(http.readyState == 4 && http.status == 200) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("Ready");
+                // var orderId = json.doc.orderId;
+                // alert("Ordered Succedssfully"+"\n Order Id: "+orderId);
+                location.href = "home.html";
+
+            }else if(http.readyState == 4 && http.status == 500){
+                var sum = 0;
+                //console.log("Error");
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("Order Failed to Added");
+                // alert("Ordered Failed Due to Some Error");
+                // //console.log("The Product List is "+productList);
+            }
+        }
+        http.open('DELETE',url,false);
+        http.setRequestHeader('Content-Type','application/json');
+        http.setRequestHeader("Authorization",token);
+        http.send();
+    }
+
+
+    function getProductList(){
+        var productList;
+        var token = localStorage.getItem("Authorization");
+        //console.log(token);
+        var http =  new XMLHttpRequest();
+        var url = "https://damp-springs-67425.herokuapp.com/getCart";
+        http.onreadystatechange = function() {
+
+            if(http.readyState == 4 && http.status == 404) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("404");
+            }else if(http.readyState == 4 && http.status == 200) {
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                //console.log("Ready");
+            }else if(http.readyState == 4 && http.status == 500){
+                var sum = 0;
+                //console.log("Error");
+                var json = JSON.parse(this.responseText);
+                //console.log(json);
+                productList =  json.doc.productList;
+                //console.log("500")
+                // //console.log("The Product List is "+productList);
+            }
+        }
+        http.open('GET',url,false);
+        http.setRequestHeader('Content-Type','application/json');
+        http.setRequestHeader("Authorization",token);
+        http.send();
+        return productList;
+    }
+
+
+
+</script>
