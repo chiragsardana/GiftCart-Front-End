@@ -157,6 +157,7 @@
                 var json = JSON.parse(this.responseText);
                 //console.log(json);
                 document.getElementById("wrongPassword").innerHTML = "Login Successfully";
+                alert("Login Successfully");
                 localStorage.setItem("Authorization",json.token);
                 location.href = "home.html";
 
@@ -239,8 +240,9 @@
                     // //console.log(http.responseText);
                     var json = JSON.parse(this.responseText);
                     //console.log(json);
-                    document.getElementById("signupDetails").innerHTML = "Signup Succefully";
-
+                    document.getElementById("signupDetails").innerHTML = "Signup Successfully";
+                    alert("Sign Up Successfully");
+                    location.href = "home.html";
                 }
             }
             // //console.log(http.responseText);
